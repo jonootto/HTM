@@ -54,7 +54,6 @@ def calculate_checksum(nmea):
 
 def gprmc(tc ,dte ,latt = '3650.00',lahem = 'S',lon = '17450.00',lohem = 'E',sg = '000.0',cse = '000.0',mvar = '000.0',mvard = 'E'):
 
-    global checksum 
     nstring= ''
     out = 'GPRMC,' + str(tc) + ',A,' + str(latt) + ',' + str(lahem) + ',' + str(lon) + ',' + str(lohem) + ',' + str(sg) + ',' + str(cse) + ',' + str(dte) + ',' + str(mvar) + ',' +str(mvard)
     csum = calculate_checksum(out)
