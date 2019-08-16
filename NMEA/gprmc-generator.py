@@ -100,7 +100,7 @@ def inputs():
             print('Invalid Input')
             time.sleep(0.5)
 
-    i_mag = str("019.0")
+    i_mag = str("0.0")
     # while i_mag == '':
     #     try:
     #         i_mag = validators.decimal(input("Input Magnetic Variation [DD.dd]: "),False,0,180)
@@ -140,10 +140,12 @@ def inputs():
         
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 lat,lat_hem,longt,long_hem,sog,course,mag,vardir = inputs()
-
+sspeed = -0.0025
+espeed = 0.0010
 while True:
-
+    lat = str(round(float(lat) + sspeed,5))
+    longt = str(round(float(longt) + espeed,5))
     nmea_string = gprmc(lat,lat_hem,longt,long_hem,sog,course,mag,vardir)
     print (nmea_string)
     sock.sendto(nmea_string.encode(), server_address)
-    time.sleep(1)
+    time.sleep(0.2)
