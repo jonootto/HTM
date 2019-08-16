@@ -2,5 +2,5 @@
 
 this is master
 
-need to install the folloing dependencies:
+need to install the following dependencies:
 pip install validator-collection
