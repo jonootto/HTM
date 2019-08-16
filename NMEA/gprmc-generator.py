@@ -53,17 +53,14 @@ def calculate_checksum(nmea):
         csum = '00' + csum
     return csum
 
-def gprmc(tc ,dte ,latt = '3650.00',lahem = 'S',lon = '17450.00',lohem = 'E',sg = '000.0',cse = '000.0',mvar = '000.0',mvard = 'E'):
+def gprmc(latt = '3650.00',lahem = 'S',lon = '17450.00',lohem = 'E',sg = '000.0',cse = '000.0',mvar = '000.0',mvard = 'E'):
+    
+    tc = str(getdate())
+    dte = str(gettime())
     out = 'GPRMC,' + str(tc) + ',A,' + str(latt) + ',' + str(lahem) + ',' + str(lon) + ',' + str(lohem) + ',' + str(sg) + ',' + str(cse) + ',' + str(dte) + ',' + str(mvar) + ',' +str(mvard)
     csum = calculate_checksum(out)
     nstring = str('$' + str(out) + '*' + str(csum) + '\r\n')
     return nstring
-
-def dtime():
-    global date
-    global timestr
-    date = str(getdate())
-    timestr = str(gettime())
 
 #lat = str(input("Enter Lat, example (4916.45): "))
 #lat_hem = str(input("N/S: "))
@@ -170,15 +167,13 @@ def inputs():
 
 
     return i_lat,i_lat_hem,i_longt,i_long_hem,i_mag,i_sog,i_course,i_vardir
-       
         
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 lat,lat_hem,longt,long_hem,sog,course,mag,vardir = inputs()
 
 while True:
 
-    dtime()
-    nmea_string = gprmc(timecode,lat,lat_hem,longt,long_hem,sog,course,date,mag,vardir)
+    nmea_string = gprmc(lat,lat_hem,longt,long_hem,sog,course,mag,vardir)
     print (nmea_string)
-    time.sleep(1)
     sock.sendto(nmea_string.encode(), server_address)
+    time.sleep(1)
