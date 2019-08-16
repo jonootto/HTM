@@ -6,20 +6,6 @@ from validator_collection import validators, checkers, errors
 
 server_address = ('224.0.0.1',4444)
 
-timecode = 0
-receiver_warning = "A"
-lat = 0
-lat_hem = 0
-longt = 0
-long_hem = 0
-sog = 0
-course = 0
-date = 0
-mag = 0
-checksum = 0
-vardir = 0
-output = ''
-
 def gettime():
     import datetime
     utctime = datetime.datetime.utcnow()
@@ -61,23 +47,6 @@ def gprmc(latt = '3650.00',lahem = 'S',lon = '17450.00',lohem = 'E',sg = '000.0'
     csum = calculate_checksum(out)
     nstring = str('$' + str(out) + '*' + str(csum) + '\r\n')
     return nstring
-
-#lat = str(input("Enter Lat, example (4916.45): "))
-#lat_hem = str(input("N/S: "))
-#longt = str(input("Enter Long, example (4916.45): "))
-#long_hem = str(input("E/W: "))
-#mag = str(input("Enter Magnetic Variation: "))
-#sog = str(input("Enter Speed Over Ground: "))
-#course = str(input("Enter Course: "))
-
-lat = str("3649.00")
-lat_hem = str("S")
-longt = str("17450.00")
-long_hem = str("E")
-mag = str("019.0")
-sog = str("000.5")
-course = str("180.0")
-vardir = str("E")
 
 def inputs():
     print('NMEA GPRMC Generator')
@@ -131,24 +100,25 @@ def inputs():
             print('Invalid Input')
             time.sleep(0.5)
 
-    while i_mag == '':
-        try:
-            i_mag = validators.decimal(input("Input Magnetic Variation [DD.dd]: "),False,0,180)
-        except:
-            print('Invalid Input')
-            time.sleep(0.5)
-
-    while i_vardir == '':
-        try:
-            i_vardir = validators.string(input("Input Hemisphere [E/W]: "),False,False,1,1)
-            i_vardir = i_vardir.upper()
-            if (not i_vardir == 'E') and (not i_vardir == 'W'):
-                i_vardir = ''
-                time.sleep(0.5)
-                print('Invalid Input1')
-        except:
-            print('Invalid Input2')
-            time.sleep(0.5)
+    i_mag = str("019.0")
+    # while i_mag == '':
+    #     try:
+    #         i_mag = validators.decimal(input("Input Magnetic Variation [DD.dd]: "),False,0,180)
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
+    i_vardir = str("E")
+    # while i_vardir == '':
+    #     try:
+    #         i_vardir = validators.string(input("Input Hemisphere [E/W]: "),False,False,1,1)
+    #         i_vardir = i_vardir.upper()
+    #         if (not i_vardir == 'E') and (not i_vardir == 'W'):
+    #             i_vardir = ''
+    #             time.sleep(0.5)
+    #             print('Invalid Input1')
+    #     except:
+    #         print('Invalid Input2')
+    #         time.sleep(0.5)
 
     while i_sog == '':
         try:
