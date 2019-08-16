@@ -2,6 +2,7 @@
 import datetime
 import socket
 import time
+from validator_collection import validators, checkers, errors
 
 server_address = ('224.0.0.1',4444)
 
@@ -53,8 +54,6 @@ def calculate_checksum(nmea):
     return csum
 
 def gprmc(tc ,dte ,latt = '3650.00',lahem = 'S',lon = '17450.00',lohem = 'E',sg = '000.0',cse = '000.0',mvar = '000.0',mvard = 'E'):
-
-    nstring= ''
     out = 'GPRMC,' + str(tc) + ',A,' + str(latt) + ',' + str(lahem) + ',' + str(lon) + ',' + str(lohem) + ',' + str(sg) + ',' + str(cse) + ',' + str(dte) + ',' + str(mvar) + ',' +str(mvard)
     csum = calculate_checksum(out)
     nstring = str('$' + str(out) + '*' + str(csum) + '\r\n')
@@ -85,51 +84,66 @@ vardir = str("E")
 
 def inputs():
     print('NMEA GPRMC Generator')
-    print('Enter Inputs...')
-    print(int(1.112))
-    
+
     i_lat = ''
     i_lat_hem = ''
     i_longt = ''
     i_long_hem = ''
-    i_mag = inputInt('Enter Magnetic Variation [000]:')
+    i_mag =''
     i_sog = ''
     i_course = ''
-    i_vardir = inputChar('Input Magnetic Variation Direction [E]: ')
+    i_vardir = ''
+
+
+    # while i_lat == '':
+    #     try:
+    #         i_lat = validators.decimal(input("Input latitude [DDMM.mm]"),False,0,18000)
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
+
+    # while i_lat_hem == '':
+    #     try:
+    #         i_lat_hem = validators.string(input("Input Hemisphere [N/S]"),False,False,1,1)
+    #         i_lat_hem = i_lat_hem.upper()
+    #         if (not i_lat_hem == 'N') and (not i_lat_hem == 'S'):
+    #             i_lat_hem = ''
+    #             time.sleep(0.5)
+    #             print('Invalid Input')
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
+
+
+    # while i_longt == '':
+    #     try:
+    #         i_longt = validators.decimal(input("Input longitude [DDMM.mm]"),False,0,18000)
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
+
+    # while i_long_hem == '':
+    #     try:
+    #         i_long_hem = validators.string(input("Input Hemisphere [E/W]"),False,False,1,1)
+    #         i_long_hem = i_long_hem.upper()
+    #         if (not i_long_hem == 'E') and (not i_long_hem == 'W'):
+    #             i_long_hem = ''
+    #             time.sleep(0.5)
+    #             print('Invalid Input')
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
+
+
     return i_lat,i_lat_hem,i_longt,i_long_hem,i_mag,i_sog,i_course,i_vardir
-
-
-def inputInt(message):
-    while True:
-        try:
-            userInput = int(input(message))
-        except ValueError:
-            print("Not an integer! Try again.")
-            continue
-        else:
-            userInput = str(userInput)
-            return userInput
-
-def inputChar(message):
-    while True:
-        userInput = input(message)
-        userInput = userInput.upper()
-        if userInput.isalpha() == True:
-            if len(userInput) == 1:
-                print(len(userInput))
-                return userInput
-            else:
-                print("Enter one character only")
-        else:
-            print("Must be a character")
-        
+       
         
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-while 1:
+while True:
     lat,lat_hem,longt,long_hem,sog,course,mag,vardir = inputs()
     dtime()
     nmea_string = gprmc(timecode,lat,lat_hem,longt,long_hem,sog,course,date,mag,vardir)
     print (nmea_string)
-    time.sleep(0.1)
+    time.sleep(1)
     sock.sendto(nmea_string.encode(), server_address)

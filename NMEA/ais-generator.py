@@ -1,6 +1,9 @@
-#!/usr/bin/python
+# from https://codereview.stackexchange.com/questions/87617/nmea-ais-generator
 
+import socket
+import time
 import math
+import random
 
 CharTable =[["0", "@", "000000"], ["1", "A", "000001"], ["2", "B", "000010"], ["3", "C", "000011"], ["4", "D", "000100"], ["5", "E", "000101"],
             ["6", "F", "000110"], ["7", "G", "000111"], ["8", "H", "001000"], ["9", "I", "001001"], [":", "J", "001010"], [";", "K", "001011"],
@@ -83,14 +86,36 @@ def GenAis(PT, CHAN, MT, RI, MMSI, NS, ROT, SOG, PA, LON, LAT, COG, HDG, TS, FIL
 
 MMSI = 366730000
 PA = '0'
-LON = -122.39253
-LAT = 37.803803
-HDG = 511
-COG = 51.3
+LAT = -36.00000
+LON = 174.00000
+HDG = 45
+COG = 45
 SOG = 20.8
 ROT = 128
 ACC = 0
 TS = 50
 CommState = 67427
 
-print (GenAis(PT, CHAN, MT, RI, MMSI, NS, ROT, SOG, PA, LON, LAT, COG, HDG, TS, FILL, CommState))
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+server_address = ('224.0.0.1',4444)
+
+ladd = 0.00005
+longadd = 0.00005
+
+while 1:
+    rla = random.random()
+    rlo = random.random()
+    HDG = random.randint(0,359)
+    COG = random.randint(0,359)
+    SOG = random.randint(0,100)
+    LAT = LAT + rla
+    LON = LON + rlo
+
+    MMSI = MMSI + 1
+    ais = GenAis(PT, CHAN, MT, RI, MMSI, NS, ROT, SOG, PA, LON, LAT, COG, HDG, TS, FILL, CommState)
+    print (ais)
+    sock.sendto(ais.encode(), server_address)
+    time.sleep(0.001)
+    LAT = -37.00000
+    LON = 175.00000
