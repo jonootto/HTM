@@ -3,4 +3,4 @@
 this is master
 
 need to install the following dependencies:
-pip install validator-collection
+pip3 install validator-collection
