@@ -137,15 +137,19 @@ def inputs():
 
 
     return i_lat,i_lat_hem,i_longt,i_long_hem,i_mag,i_sog,i_course,i_vardir
-        
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-lat,lat_hem,longt,long_hem,sog,course,mag,vardir = inputs()
-sspeed = -0.0025
-espeed = 0.0010
+
 while True:
-    lat = str(round(float(lat) + sspeed,5))
-    longt = str(round(float(longt) + espeed,5))
-    nmea_string = gprmc(lat,lat_hem,longt,long_hem,sog,course,mag,vardir)
-    print (nmea_string)
-    sock.sendto(nmea_string.encode(), server_address)
-    time.sleep(0.01)
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        lat,lat_hem,longt,long_hem,sog,course,mag,vardir = inputs()
+        sspeed = -0.00025
+        espeed = 0.00010
+        while True:
+            lat = str(round(float(lat) + sspeed,5))
+            longt = str(round(float(longt) + espeed,5))
+            nmea_string = gprmc(lat,lat_hem,longt,long_hem,sog,course,mag,vardir)
+            print (nmea_string)
+            sock.sendto(nmea_string.encode(), server_address)
+            time.sleep(0.01)
+    except:
+        print("error")
