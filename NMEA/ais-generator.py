@@ -104,8 +104,8 @@ ladd = 0.00005
 longadd = 0.00005
 
 while 1:
-    rla = random.random()
-    rlo = random.random()
+    rla = random.random()/2
+    rlo = random.random()/2
     HDG = random.randint(0,359)
     COG = random.randint(0,359)
     SOG = random.randint(0,100)
@@ -118,4 +118,4 @@ while 1:
     sock.sendto(ais.encode(), server_address)
     time.sleep(0.001)
     LAT = -37.00000
-    LON = 175.00000
+    LON = 174.70000

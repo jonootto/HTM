@@ -148,4 +148,4 @@ while True:
     nmea_string = gprmc(lat,lat_hem,longt,long_hem,sog,course,mag,vardir)
     print (nmea_string)
     sock.sendto(nmea_string.encode(), server_address)
-    time.sleep(0.2)
+    time.sleep(0.01)
