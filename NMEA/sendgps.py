@@ -21,6 +21,6 @@ server_address = ('224.0.0.1',4444)
 while True:
      cc=str(ser.readline())
      if (len(cc) != 3):
-        output = cc[2:][:-5]
+        output = cc[2:][:-5]+'\r\n'
         print(output)
         sock.sendto(output.encode(), server_address)
