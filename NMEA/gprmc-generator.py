@@ -60,45 +60,46 @@ def inputs():
     i_course = ''
     i_vardir = ''
 
+    i_lat = 3645
+    # while i_lat == '':
+    #     try:
+    #         i_lat = validators.decimal(input("Input latitude [DDMM.mm]: "),False,0,18000)
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
+            
+    i_lat_hem = 'S'
+    # while i_lat_hem == '':
+    #     try:
+    #         i_lat_hem = validators.string(input("Input Hemisphere [N/S]: "),False,False,1,1)
+    #         i_lat_hem = i_lat_hem.upper()
+    #         if (not i_lat_hem == 'N') and (not i_lat_hem == 'S'):
+    #             i_lat_hem = ''
+    #             time.sleep(0.5)
+    #             print('Invalid Input')
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
 
-    while i_lat == '':
-        try:
-            i_lat = validators.decimal(input("Input latitude [DDMM.mm]: "),False,0,18000)
-        except:
-            print('Invalid Input')
-            time.sleep(0.5)
-
-    while i_lat_hem == '':
-        try:
-            i_lat_hem = validators.string(input("Input Hemisphere [N/S]: "),False,False,1,1)
-            i_lat_hem = i_lat_hem.upper()
-            if (not i_lat_hem == 'N') and (not i_lat_hem == 'S'):
-                i_lat_hem = ''
-                time.sleep(0.5)
-                print('Invalid Input')
-        except:
-            print('Invalid Input')
-            time.sleep(0.5)
-
-
-    while i_longt == '':
-        try:
-            i_longt = validators.decimal(input("Input longitude [DDMM.mm]: "),False,0,18000)
-        except:
-            print('Invalid Input')
-            time.sleep(0.5)
-
-    while i_long_hem == '':
-        try:
-            i_long_hem = validators.string(input("Input Hemisphere [E/W]: "),False,False,1,1)
-            i_long_hem = i_long_hem.upper()
-            if (not i_long_hem == 'E') and (not i_long_hem == 'W'):
-                i_long_hem = ''
-                time.sleep(0.5)
-                print('Invalid Input')
-        except:
-            print('Invalid Input')
-            time.sleep(0.5)
+    i_longt = '17451'
+    # while i_longt == '':
+    #     try:
+    #         i_longt = validators.decimal(input("Input longitude [DDMM.mm]: "),False,0,18000)
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
+    i_long_hem ='E'
+    # while i_long_hem == '':
+    #     try:
+    #         i_long_hem = validators.string(input("Input Hemisphere [E/W]: "),False,False,1,1)
+    #         i_long_hem = i_long_hem.upper()
+    #         if (not i_long_hem == 'E') and (not i_long_hem == 'W'):
+    #             i_long_hem = ''
+    #             time.sleep(0.5)
+    #             print('Invalid Input')
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)
 
     i_mag = str("0.0")
     # while i_mag == '':
@@ -120,19 +121,21 @@ def inputs():
     #         print('Invalid Input2')
     #         time.sleep(0.5)
 
-    while i_sog == '':
-        try:
-            i_sog = validators.decimal(input("Input Speed Over Ground [kt.kt]: "),False,0,100000)
-        except:
-            print('Invalid Input')
-            time.sleep(0.5)            
+    i_sog = '5'
+    # while i_sog == '':
+    #     try:
+    #         i_sog = validators.decimal(input("Input Speed Over Ground [kt.kt]: "),False,0,100000)
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)            
 
-    while i_course == '':
-        try:
-            i_course = validators.decimal(input("Input Course [DD.dd]: "),False,0,360)
-        except:
-            print('Invalid Input')
-            time.sleep(0.5)   
+    i_course = '90'
+    # while i_course == '':
+    #     try:
+    #         i_course = validators.decimal(input("Input Course [DD.dd]: "),False,0,360)
+    #     except:
+    #         print('Invalid Input')
+    #         time.sleep(0.5)   
 
 
 
@@ -150,6 +153,8 @@ while True:
     while True:
         lat = str(round(float(lat) + sspeed,5))
         longt = str(round(float(longt) + espeed,5))
+
+
         nmea_string = gprmc(lat,lat_hem,longt,long_hem,sog,course,mag,vardir)
         try:
             sock.sendto(nmea_string.encode(), server_address)
