@@ -1,2 +1,4 @@
 validator-collection
+pyserial
+
 

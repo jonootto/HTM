@@ -1,5 +1,5 @@
 # send position form serial to network
-# pip3 install pyserial
+
 
 import socket
 import serial
