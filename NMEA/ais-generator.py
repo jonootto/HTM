@@ -25,7 +25,7 @@ FILL = '000000'
 NS = 5
 
 
-def Invert(BinStr):     # Oh shit! I'm a lame programmer and can't find a function to swap bits in binary!
+def Invert(BinStr):   
     return BinStr.replace("0", "A").replace("1", "0").replace("A", "1")
 
 def convert(val,bits): # This magic function converts dec to bin in right format
